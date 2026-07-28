@@ -62,7 +62,7 @@ export function BottomNav() {
 
   return (
     <nav
-      className="fixed bottom-0 left-1/2 z-50 flex h-16 w-full max-w-[480px] -translate-x-1/2 items-stretch border-t border-zinc-100 bg-white/95 backdrop-blur-md"
+      className="fixed inset-x-0 bottom-0 z-50 flex h-16 w-full items-stretch border-t border-zinc-100 bg-white/95 px-2 backdrop-blur-md sm:px-6 md:px-8 lg:px-10"
       aria-label="Navegación principal"
     >
       {tabs.map((tab) => (

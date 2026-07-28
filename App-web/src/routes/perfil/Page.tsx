@@ -24,7 +24,7 @@ export function PerfilPage() {
       </div>
 
       {/* Grid de estadísticas */}
-      <div className="grid grid-cols-3 divide-x divide-zinc-100 rounded-xl border border-zinc-100 bg-white py-4 text-center">
+      <div className="grid grid-cols-3 divide-x divide-zinc-100 rounded-xl border border-zinc-100 bg-white py-4 text-center sm:max-w-2xl">
         <div>
           <p className="text-lg font-black text-zinc-900">42</p>
           <p className="text-[9px] font-bold uppercase tracking-wider text-zinc-400">Partidos</p>
@@ -44,7 +44,7 @@ export function PerfilPage() {
         <h3 className="mb-3 text-xs font-bold tracking-wider uppercase text-zinc-400">
           Ajustes de cuenta
         </h3>
-        <div className="divide-y divide-zinc-100 rounded-xl border border-zinc-100 bg-white px-4">
+        <div className="divide-y divide-zinc-100 rounded-xl border border-zinc-100 bg-white px-4 lg:grid lg:grid-cols-2 lg:divide-x lg:divide-y-0">
           {menuItems.map((item, idx) => (
             <button
               key={idx}

@@ -4,10 +4,12 @@ import { BottomNav } from './BottomNav'
 
 export function AppLayout() {
   return (
-    <div className="mx-auto flex min-h-svh max-w-[480px] flex-col bg-white border-x border-zinc-200/80">
+    <div className="flex min-h-svh w-full flex-col bg-white">
       <Header />
-      <main className="flex-1 overflow-y-auto px-4 pt-[calc(3.5rem+1rem)] pb-[calc(4rem+1rem)]">
-        <Outlet />
+      <main className="flex-1 px-4 pb-24 pt-20 sm:px-6 md:px-8 lg:px-10">
+        <div className="mx-auto w-full">
+          <Outlet />
+        </div>
       </main>
       <BottomNav />
     </div>

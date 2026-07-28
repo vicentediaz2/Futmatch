@@ -4,7 +4,7 @@ import { navIconClass } from './nav-icon'
 
 export function Header() {
   return (
-    <header className="fixed top-0 left-1/2 z-50 flex h-14 w-full max-w-[480px] -translate-x-1/2 items-center justify-between border-b border-zinc-100 bg-white/90 backdrop-blur-md px-4">
+    <header className="fixed inset-x-0 top-0 z-50 flex h-14 w-full items-center justify-between border-b border-zinc-100 bg-white/90 px-4 backdrop-blur-md sm:px-6 md:px-8 lg:px-10">
       <span className="text-xs font-black tracking-[0.2em] uppercase text-zinc-900">
         Futmatch
       </span>

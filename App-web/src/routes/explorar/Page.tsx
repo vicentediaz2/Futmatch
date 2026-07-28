@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { VenueCard } from '../../components/VenueCard'
 
 export function ExplorarPage() {
   const [selectedFilter, setSelectedFilter] = useState<'all' | 'f5' | 'f7' | 'f11'>('all')
@@ -95,38 +96,18 @@ export function ExplorarPage() {
       </div>
 
       {/* Grid de centros */}
-      <div className="space-y-4">
+      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         {filteredVenues.length > 0 ? (
           filteredVenues.map((venue) => (
-            <div
+            <VenueCard
               key={venue.id}
-              className="group rounded-xl border border-zinc-150 bg-white p-4 transition-all hover:border-zinc-200"
-            >
-              <div className="flex items-start justify-between">
-                <div>
-                  <span className="text-[9px] font-bold uppercase tracking-wider text-zinc-400">
-                    {venue.typeLabel}
-                  </span>
-                  <h3 className="mt-1 text-sm font-bold text-zinc-900 group-hover:text-zinc-950">
-                    {venue.name}
-                  </h3>
-                  <p className="mt-0.5 text-xs text-zinc-500">{venue.address}</p>
-                </div>
-                <span className="flex items-center gap-0.5 rounded bg-zinc-50 px-1.5 py-0.5 text-[10px] font-bold text-zinc-800">
-                  ★ {venue.rating}
-                </span>
-              </div>
-
-              <div className="mt-4 flex items-center justify-between border-t border-zinc-50 pt-3">
-                <div>
-                  <p className="text-[9px] uppercase tracking-wider text-zinc-400">Precio promedio</p>
-                  <p className="text-xs font-bold text-zinc-900">{venue.price}</p>
-                </div>
-                <span className="text-[10px] font-semibold text-zinc-500 bg-zinc-50 px-2 py-1 rounded-md">
-                  {venue.available}
-                </span>
-              </div>
-            </div>
+              typeLabel={venue.typeLabel}
+              name={venue.name}
+              address={venue.address}
+              rating={venue.rating}
+              price={venue.price}
+              available={venue.available}
+            />
           ))
         ) : (
           <p className="text-center py-12 text-xs text-zinc-400">No se encontraron complejos deportivos</p>

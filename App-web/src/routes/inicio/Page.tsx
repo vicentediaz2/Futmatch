@@ -8,7 +8,7 @@ export function InicioPage() {
       </div>
 
       {/* Tarjeta de Próximo Partido */}
-      <div className="rounded-2xl bg-zinc-950 p-5 text-white shadow-sm transition-all hover:bg-zinc-900">
+      <div className="rounded-2xl bg-zinc-950 p-5 text-white shadow-sm transition-all hover:bg-zinc-900 sm:p-6">
         <div className="flex items-center justify-between border-b border-zinc-800 pb-3">
           <span className="text-[10px] font-bold tracking-wider uppercase text-zinc-400">
             Siguiente Partido
@@ -37,7 +37,7 @@ export function InicioPage() {
         <h2 className="mb-3 text-xs font-bold tracking-wider uppercase text-zinc-400">
           Acciones rápidas
         </h2>
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <button className="flex flex-col items-start rounded-xl border border-zinc-200 bg-white p-4 text-left transition-all hover:bg-zinc-50 active:scale-[0.98]">
             <span className="text-sm font-bold text-zinc-900">Crear Partido</span>
             <span className="mt-1 text-[10px] text-zinc-500 leading-normal">Organiza una pichanga con amigos o abre cupos al público</span>
@@ -54,7 +54,7 @@ export function InicioPage() {
         <h2 className="mb-3 text-xs font-bold tracking-wider uppercase text-zinc-400">
           Partidos cerca tuyo
         </h2>
-        <div className="divide-y divide-zinc-100">
+        <div className="grid gap-x-8 divide-y divide-zinc-100 sm:grid-cols-2 sm:divide-y-0 lg:grid-cols-3">
           {[
             { id: 1, type: 'Fútbol 5', time: 'Mañana, 19:30', place: 'Complejo San Luis', status: '2 cupos libres' },
             { id: 2, type: 'Fútbol 11', time: 'Dom, 10:00', place: 'Estadio Municipal', status: 'Completo' },

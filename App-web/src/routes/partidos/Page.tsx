@@ -75,7 +75,7 @@ export function PartidosPage() {
       </div>
 
       {/* Lista de partidos */}
-      <div className="space-y-4">
+      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         {activeTab === 'upcoming' ? (
           upcomingMatches.length > 0 ? (
             upcomingMatches.map((match) => (
