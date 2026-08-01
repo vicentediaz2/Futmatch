@@ -1,47 +1,40 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { VenueCard } from '../../components/VenueCard'
+import { supabase } from '../../lib/supabase'
 
 export function ExplorarPage() {
   const [selectedFilter, setSelectedFilter] = useState<'all' | 'f5' | 'f7' | 'f11'>('all')
   const [searchQuery, setSearchQuery] = useState('')
+  const [canchas, setCanchas] = useState<any[]>([])
+  const [cargando, setCargando] = useState(true)
 
-  const venues = [
-    {
-      id: 1,
-      name: 'Cancha El Templo',
-      type: 'f7',
-      typeLabel: 'Fútbol 7 & 9',
-      address: 'Avenida Departamental 1450, Santiago',
-      rating: '4.8',
-      price: '$45.000 /hr',
-      available: 'Hoy disponible',
-    },
-    {
-      id: 2,
-      name: 'Complejo San Luis',
-      type: 'f5',
-      typeLabel: 'Fútbol 5',
-      address: 'Calle San Luis 230, Las Condes',
-      rating: '4.5',
-      price: '$35.000 /hr',
-      available: 'Hoy disponible',
-    },
-    {
-      id: 3,
-      name: 'Estadio Municipal Peñalolén',
-      type: 'f11',
-      typeLabel: 'Fútbol 11',
-      address: 'Valenzuela Llanos 8500, Peñalolén',
-      rating: '4.9',
-      price: '$60.000 /hr',
-      available: 'Solo fin de semana',
-    },
-  ]
+  useEffect(() => {
+    async function cargarCanchas() {
+      try {
+        const { data, error } = await supabase.from('cancha').select('*')
+        if (error) {
+          console.error('Error cargando canchas:', error)
+        } else if (data) {
+          setCanchas(data)
+        }
+      } catch (err) {
+        console.error('Excepción al cargar:', err)
+      } finally {
+        setCargando(false)
+      }
+    }
+    cargarCanchas()
+  }, [])
 
-  const filteredVenues = venues.filter((venue) => {
-    const matchesFilter = selectedFilter === 'all' || venue.type === selectedFilter
-    const matchesSearch = venue.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      venue.address.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredVenues = canchas.filter((cancha) => {
+    // Como la base de datos aún no tiene una columna de 'tipo de fútbol', el filtro de tipo solo mostrará resultados si está en 'Todos'.
+    const matchesFilter = selectedFilter === 'all' 
+    
+    const nombreStr = cancha.nombre ? cancha.nombre.toLowerCase() : ''
+    const descStr = cancha.descripción ? cancha.descripción.toLowerCase() : ''
+    const busquedaStr = searchQuery.toLowerCase()
+
+    const matchesSearch = nombreStr.includes(busquedaStr) || descStr.includes(busquedaStr)
     return matchesFilter && matchesSearch
   })
 
@@ -56,7 +49,7 @@ export function ExplorarPage() {
       <div className="relative">
         <input
           type="text"
-          placeholder="Buscar por nombre o comuna..."
+          placeholder="Buscar por nombre o descripción..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className="w-full rounded-xl border border-zinc-200 bg-white py-3 pr-4 pl-10 text-xs text-zinc-900 outline-none transition-all placeholder:text-zinc-400 focus:border-zinc-950 focus:ring-1 focus:ring-zinc-950"
@@ -97,20 +90,22 @@ export function ExplorarPage() {
 
       {/* Grid de centros */}
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-        {filteredVenues.length > 0 ? (
-          filteredVenues.map((venue) => (
+        {cargando ? (
+          <p className="text-center py-12 text-xs text-zinc-400 col-span-full">Cargando canchas desde Supabase...</p>
+        ) : filteredVenues.length > 0 ? (
+          filteredVenues.map((cancha) => (
             <VenueCard
-              key={venue.id}
-              typeLabel={venue.typeLabel}
-              name={venue.name}
-              address={venue.address}
-              rating={venue.rating}
-              price={venue.price}
-              available={venue.available}
+              key={cancha.id_cancha || Math.random()}
+              typeLabel={'Fútbol'}
+              name={cancha.nombre || 'Cancha sin nombre'}
+              address={cancha.descripción || 'Sin descripción'}
+              rating={'5.0'}
+              price={`$0 /hr`}
+              available={'Disponible'}
             />
           ))
         ) : (
-          <p className="text-center py-12 text-xs text-zinc-400">No se encontraron complejos deportivos</p>
+          <p className="text-center py-12 text-xs text-zinc-400 col-span-full">No se encontraron complejos deportivos</p>
         )}
       </div>
     </section>

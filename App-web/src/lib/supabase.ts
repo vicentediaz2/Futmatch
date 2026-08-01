@@ -9,4 +9,7 @@ if (!supabaseUrl || !supabaseAnonKey || supabaseUrl.includes('your-supabase-proj
   )
 }
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+export const supabase = createClient(
+  supabaseUrl || 'https://dummy.supabase.co',
+  supabaseAnonKey || 'dummy'
+)
