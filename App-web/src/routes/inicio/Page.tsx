@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../../lib/supabase'
-
+import { useAuth } from '../../contexts/AuthContext'
 
 export function InicioPage() {
+  const { user } = useAuth()
   const [canchas, setCanchas] = useState<any[]>([])
   const [cargando, setCargando] = useState(true)
   const [errorTexto, setErrorTexto] = useState<string | null>(null)
@@ -36,7 +37,9 @@ export function InicioPage() {
     <section className="space-y-6">
       {/* Saludo */}
       <div className="flex flex-col gap-0.5">
-        <h1 className="text-xl font-bold tracking-tight text-zinc-900">Hola, Vicente</h1>
+        <h1 className="text-xl font-bold tracking-tight text-zinc-900">
+          Hola, {user?.user_metadata?.alias || 'Jugador'}
+        </h1>
         <p className="text-xs text-zinc-500">¿Listo para el partido de hoy?</p>
       </div>
 
