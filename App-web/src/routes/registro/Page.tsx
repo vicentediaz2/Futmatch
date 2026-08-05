@@ -51,23 +51,7 @@ export function RegistroPage() {
       return
     }
 
-    // 2. Si se creó, insertar en la tabla perfil.
-    if (authData.user) {
-      const { error: profileError } = await supabase.from('perfil').insert({
-        id_usuario: authData.user.id,
-        nivel: 1, 
-        experiencia: 0,
-        racha: 0,
-        partidosjugados: 0,
-        partidosganados: 0,
-        posicion: 'Sin definir'
-      })
-
-      if (profileError) {
-        console.error('Error al crear perfil:', profileError)
-      }
-    }
-
+   
     // 3. Revisar si requiere confirmación de correo
     if (authData.user && !authData.session) {
       setSuccessMsg('¡Cuenta creada! Por favor, revisa tu bandeja de entrada (y la carpeta de spam) para confirmar tu correo antes de iniciar sesión.')
