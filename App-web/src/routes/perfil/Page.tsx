@@ -11,6 +11,7 @@ export function PerfilPage() {
   const [loading, setLoading] = useState(true)
   const [isEditing, setIsEditing] = useState(false)
   const [newPosicion, setNewPosicion] = useState('')
+  const [reputacion, setReputacion] = useState<number | string>('...')
 
   useEffect(() => {
     async function cargarPerfil() {
@@ -25,6 +26,19 @@ export function PerfilPage() {
       if (!error && data) {
         setPerfil(data)
         setNewPosicion(data.posicion || '')
+
+        const { data: metricas } = await supabase
+          .from('metricas_jugador')
+          .select('reputacion_bayesiana')
+          .eq('id_perfil', data.id_perfil)
+          .single()
+          
+        if (metricas) {
+          setReputacion(metricas.reputacion_bayesiana)
+        } else {
+          setReputacion("N/A")
+        }
+
       }
       setLoading(false)
     }
@@ -104,7 +118,7 @@ export function PerfilPage() {
       )}
 
       {/* Grid de estadísticas */}
-      <div className="grid grid-cols-3 divide-x divide-zinc-100 rounded-xl border border-zinc-100 bg-white py-4 text-center sm:max-w-2xl">
+      <div className="grid grid-cols-4 divide-x divide-zinc-100 rounded-xl border border-zinc-100 bg-white py-4 text-center sm:max-w-2xl">
         <div>
           <p className="text-lg font-black text-zinc-900">{perfil?.partidosjugados || 0}</p>
           <p className="text-[9px] font-bold uppercase tracking-wider text-zinc-400">Partidos</p>
@@ -116,6 +130,22 @@ export function PerfilPage() {
         <div>
           <p className="text-lg font-black text-zinc-900">{perfil?.racha || 0}</p>
           <p className="text-[9px] font-bold uppercase tracking-wider text-zinc-400">Racha</p>
+        </div>
+
+       {/* Reputacion */}
+        <div>
+          <p className="text-lg font-black text-blue-600">{reputacion}</p>
+          <p className="text-[9px] font-bold uppercase tracking-wider text-blue-400">Fair Play</p>
+        </div>
+      </div>
+
+      {/* Sección de Logros y Trofeos */}
+      <div>
+        <h3 className="mb-3 text-xs font-bold tracking-wider uppercase text-zinc-400">
+          Mis Logros
+        </h3>
+        <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-zinc-200 bg-zinc-50/50 py-8 px-4 text-center sm:max-w-2xl">
+          <p className="text-xs text-zinc-400">Aún no tienes logros desbloqueados</p>
         </div>
       </div>
 
